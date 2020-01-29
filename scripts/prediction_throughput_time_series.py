@@ -35,7 +35,7 @@ os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
 from keras.layers import *
 import tensorflow as tf
 from keras.models import Sequential, Model, Input
-from keras.layers import Dense, LSTM, GRU, Dropout, Bidirectional
+from keras.layers import Dense, LSTM, GRU, Dropout, Bidirectional, BatchNormalization
 import matplotlib.image  as mpimg
 from keras.callbacks import TensorBoard, ReduceLROnPlateau, ModelCheckpoint
 from keras import optimizers, regularizers, initializers
@@ -50,7 +50,7 @@ def plot_prediction_history(train, train_inv, test, test_inv, pred_inv):
     plt.ylabel('Throughput')
     plt.xlabel('Time Step')
     plt.legend()
-    plt.savefig(os.path.join('./../plots', 'prediction.eps'))
+    plt.savefig(os.path.join('./../plots', 'prediction.jpg'))
     plt.grid(True)
     plt.show();
       
@@ -61,7 +61,7 @@ def plot_prediction_downthpt(pred_inv, test_inv):
     plt.ylabel('Throughput')
     plt.xlabel('Time Step')
     plt.legend()
-    plt.savefig(os.path.join('./../plots', 'prediction_detail.eps'))
+    plt.savefig(os.path.join('./../plots', 'prediction_detail.jpg'))
     plt.grid(True)
     plt.show();
 
@@ -138,10 +138,12 @@ def transform_dataset(dataset, look_back=1):
 
 def model_lstm(train):
     input_x = Input(shape=(train.shape[1], train.shape[2]))
-    initializer = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
-    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer, return_sequences=True)(input_x)
-    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer, return_sequences=True)(x)
-    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer, return_sequences=False)(x)
+    initializer_0 = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
+    # initializer_1 = keras.initializers.TruncatedNormal(mean=0.0, stddev=0.05, seed=None)
+    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer_0, return_sequences=True)(input_x)
+    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer_0, return_sequences=False)(x)
+    # x = LSTM(units=64, activation='tanh', kernel_initializer=initializer_1, return_sequences=False)(x)
+    # x = BatchNormalization()(x)
     # x = LSTM(units=16, activation='tanh', return_sequences=False)(x)
     x = Dropout(rate=0.1)(x)
     x = Dense(units=1)(x)
@@ -160,18 +162,18 @@ def model_lstm_bid(train):
 
 # fit model
 def compile_fit(train, target_train, test, target_test):
-    EPOCHS = 60
+    EPOCHS = 40
     BATCH_SIZE = 64
     model = model_lstm(train)
     model.summary()
     sgd_0 = optimizers.SGD(lr=0.05, decay=1e-5, momentum=0.9)
-    sgd_1 = optimizers.SGD(lr=0.5, decay=0, nesterov=True)
-    sgd_2 = optimizers.Adam(learning_rate=0.5, beta_1=0.9, beta_2=0.999, amsgrad=False)
+    sgd_1 = optimizers.SGD(lr=0.7, decay=0, nesterov=True)
+    sgd_2 = optimizers.Adam(learning_rate=0.5)
     # model.compile(loss=tf.keras.losses.Huber(), optimizer=sgd_1, metrics=['mean_absolute_error', 'mean_squared_error'])
     model.compile(loss='mean_squared_error', optimizer=sgd_1, metrics=['mean_absolute_error', 'mean_squared_error'])
     early_stop = keras.callbacks.EarlyStopping(monitor='val_loss',
                                                min_delta=0, 
-                                               patience=55,
+                                               patience=30,
                                                verbose=1, 
                                                mode='max',
                                                baseline=None,
@@ -203,23 +205,31 @@ if __name__ == "__main__":
     dataset_throughput = pd.read_csv('../../file/dataset_throughput.csv', header=0)
     dataset_throughput.set_index('timestamp', inplace=True)
     # dataset_throughput.sort_values('timestamp', inplace=True)
-
-    # swap some columns positions
-    columnsTitles = ['connect_time','request_ticks','year','month','hour','day','weekday','minute',
-                  'second','iteration','delta_sys_time','delta_user_time','rate','received','delay','tcp_mean_wind','downthpt']
+    
+    # change some columns positions according feature selection: Recursive Feature Selection (RFE)
+    columnsTitles = ['delta_sys_time','year',
+                     'month','weekday',
+                     'day','hour','minute',
+                     'second','iteration',
+                     'connect_time',
+                     'request_ticks','delta_user_time',
+                     'rate','received',
+                     'delay','tcp_mean_wind','downthpt']
     dataset_throughput = dataset_throughput.reindex(columns=columnsTitles)
 
     dataset = dataset_throughput.iloc[:, 4:]
     dataset = dataset.astype('float32')
     print(dataset.shape)
-    TRAIN_SIZE = int(len(dataset) * 0.60) # 60% train set
-    VALID_SIZE = int(len(dataset) * 0.80) # 20% valid and test set
+    TRAIN_SIZE = int(len(dataset) * 0.80) # 80% train set
+    VALID_SIZE = int(len(dataset) * 0.90) # 10% valid and test set
 
     # normalization #
     # onehot_encoder = OneHotEncoder(sparse=False, categories='auto')
     # here we going to normalize the categorical features with One Hot Encoder
     # here we going to normalize the categorical features with One Hot Encoder
-    col = ['hour', 'day', 'weekday', 'minute', 'second', 'iteration']
+    
+    # here we going to normalize the categorical features with One Hot Encoder
+    col = ['hour','day','minute','second','iteration']
     dataset = one_hot_encoder(dataset, col)
 
     dataset_train = dataset.iloc[:TRAIN_SIZE, :]
@@ -259,9 +269,12 @@ if __name__ == "__main__":
     # print('\nFinished onehot encoder')
 
     # normalization with downthpt!
-    f_columns = ['hour','day','weekday','minute','second',
-                 'iteration','delta_sys_time','delta_user_time',
-                 'rate','received','delay','tcp_mean_wind']
+    f_columns = ['day','hour',
+                 'minute','second','iteration',
+                 'connect_time','request_ticks',
+                 'delta_user_time',
+                 'rate','received',
+                 'delay','tcp_mean_wind']
 
     scaler_transf = MinMaxScaler(feature_range=(0, 1))
     scaler_target = MinMaxScaler(feature_range=(0, 1))
@@ -280,6 +293,8 @@ if __name__ == "__main__":
     dataset_test.loc[:, f_columns] = scaler_transf.transform(dataset_test[f_columns].to_numpy())
     dataset_test['downthpt'] = scaler_target.transform(dataset_test[['downthpt']])
     print('\nFinished normalization...')
+    print('\nSaving test dataset...')
+    dataset_test.to_csv('../../file/dataset_test.csv', encoding='utf-8', index=False)
     
     train_arr = dataset_train.values
     val_arr = dataset_val.values
@@ -321,7 +336,9 @@ if __name__ == "__main__":
     plot_prediction_history(y_train, y_train_inv, y_test, y_test_inv, y_pred_inv);
     plot_prediction_downthpt(y_pred_inv, y_test_inv)
     
-    print("Saving networks weights...")
-    model.save_weights('./../output_files/model_lstm_train.h5')
+    model.save('./../output_files/train_model.h5')  # creates a HDF5 file 'model_train.h5'
+    del model  # deletes the existing model
+    print("\nSaved model...")
+    # model.save_weights('./../output_files/model_lstm_train.h5')
     print('\nFinished training...')
     
