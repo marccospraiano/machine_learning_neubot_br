@@ -140,12 +140,11 @@ def model_lstm(train):
     input_x = Input(shape=(train.shape[1], train.shape[2]))
     initializer_0 = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
     # initializer_1 = keras.initializers.TruncatedNormal(mean=0.0, stddev=0.05, seed=None)
-    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer_0, return_sequences=True)(input_x)
-    x = LSTM(units=32, activation='tanh', kernel_initializer=initializer_0, return_sequences=False)(x)
+    x = GRU(units=32, activation='relu', kernel_initializer=initializer_0, return_sequences=True)(input_x)
+    x = GRU(units=32, activation='relu', kernel_initializer=initializer_0, return_sequences=False)(x)
     # x = LSTM(units=64, activation='tanh', kernel_initializer=initializer_1, return_sequences=False)(x)
-    # x = BatchNormalization()(x)
     # x = LSTM(units=16, activation='tanh', return_sequences=False)(x)
-    x = Dropout(rate=0.1)(x)
+    x = Dropout(rate=0.2)(x) # previous = rate=0.2
     x = Dense(units=1)(x)
     model = Model(inputs=input_x, outputs=x)
     return model
@@ -162,18 +161,18 @@ def model_lstm_bid(train):
 
 # fit model
 def compile_fit(train, target_train, test, target_test):
-    EPOCHS = 40
-    BATCH_SIZE = 64
+    EPOCHS = 70 # previous = 40
+    BATCH_SIZE = 32
     model = model_lstm(train)
     model.summary()
-    sgd_0 = optimizers.SGD(lr=0.05, decay=1e-5, momentum=0.9)
+    sgd_0 = optimizers.SGD(lr=0.05, decay=1e-5, momentum=0.9) # previous lr=0.05, decay=1e-5, momentum=0.9)
     sgd_1 = optimizers.SGD(lr=0.7, decay=0, nesterov=True)
     sgd_2 = optimizers.Adam(learning_rate=0.5)
     # model.compile(loss=tf.keras.losses.Huber(), optimizer=sgd_1, metrics=['mean_absolute_error', 'mean_squared_error'])
-    model.compile(loss='mean_squared_error', optimizer=sgd_1, metrics=['mean_absolute_error', 'mean_squared_error'])
+    model.compile(loss='mean_squared_error', optimizer=sgd_0, metrics=['mean_absolute_error', 'mean_squared_error'])
     early_stop = keras.callbacks.EarlyStopping(monitor='val_loss',
                                                min_delta=0, 
-                                               patience=30,
+                                               patience=55, # previous = 30
                                                verbose=1, 
                                                mode='max',
                                                baseline=None,
@@ -204,7 +203,7 @@ if __name__ == "__main__":
     # load the dataset
     dataset_throughput = pd.read_csv('../../file/dataset_throughput.csv', header=0)
     dataset_throughput.set_index('timestamp', inplace=True)
-    # dataset_throughput.sort_values('timestamp', inplace=True)
+    dataset_throughput.sort_values('timestamp', inplace=True)
     
     # change some columns positions according feature selection: Recursive Feature Selection (RFE)
     columnsTitles = ['delta_sys_time','year',
@@ -225,9 +224,6 @@ if __name__ == "__main__":
 
     # normalization #
     # onehot_encoder = OneHotEncoder(sparse=False, categories='auto')
-    # here we going to normalize the categorical features with One Hot Encoder
-    # here we going to normalize the categorical features with One Hot Encoder
-    
     # here we going to normalize the categorical features with One Hot Encoder
     col = ['hour','day','minute','second','iteration']
     dataset = one_hot_encoder(dataset, col)
