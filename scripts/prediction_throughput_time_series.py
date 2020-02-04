@@ -140,11 +140,11 @@ def model_lstm(train):
     input_x = Input(shape=(train.shape[1], train.shape[2]))
     initializer_0 = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
     # initializer_1 = keras.initializers.TruncatedNormal(mean=0.0, stddev=0.05, seed=None)
-    x = GRU(units=32, activation='relu', kernel_initializer=initializer_0, return_sequences=True)(input_x)
-    x = GRU(units=32, activation='relu', kernel_initializer=initializer_0, return_sequences=False)(x)
+    x = GRU(units=64, activation='tanh', kernel_initializer=initializer_0, return_sequences=True)(input_x)
+    x = GRU(units=64, activation='tanh', kernel_initializer=initializer_0, return_sequences=False)(x)
     # x = LSTM(units=64, activation='tanh', kernel_initializer=initializer_1, return_sequences=False)(x)
     # x = LSTM(units=16, activation='tanh', return_sequences=False)(x)
-    x = Dropout(rate=0.2)(x) # previous = rate=0.2
+    x = Dropout(rate=0.1)(x) # previous = rate=0.2
     x = Dense(units=1)(x)
     model = Model(inputs=input_x, outputs=x)
     return model
@@ -161,18 +161,18 @@ def model_lstm_bid(train):
 
 # fit model
 def compile_fit(train, target_train, test, target_test):
-    EPOCHS = 70 # previous = 40
-    BATCH_SIZE = 32
+    EPOCHS = 40 # previous = 40
+    BATCH_SIZE = 64
     model = model_lstm(train)
     model.summary()
     sgd_0 = optimizers.SGD(lr=0.05, decay=1e-5, momentum=0.9) # previous lr=0.05, decay=1e-5, momentum=0.9)
-    sgd_1 = optimizers.SGD(lr=0.7, decay=0, nesterov=True)
-    sgd_2 = optimizers.Adam(learning_rate=0.5)
+    sgd_1 = optimizers.SGD(lr=0.5, decay=0, nesterov=True)
+    sgd_2 = optimizers.Adam(learning_rate=0.7)
     # model.compile(loss=tf.keras.losses.Huber(), optimizer=sgd_1, metrics=['mean_absolute_error', 'mean_squared_error'])
     model.compile(loss='mean_squared_error', optimizer=sgd_0, metrics=['mean_absolute_error', 'mean_squared_error'])
     early_stop = keras.callbacks.EarlyStopping(monitor='val_loss',
                                                min_delta=0, 
-                                               patience=55, # previous = 30
+                                               patience=30, # previous = 30
                                                verbose=1, 
                                                mode='max',
                                                baseline=None,
@@ -203,31 +203,39 @@ if __name__ == "__main__":
     # load the dataset
     dataset_throughput = pd.read_csv('../../file/dataset_throughput.csv', header=0)
     dataset_throughput.set_index('timestamp', inplace=True)
-    dataset_throughput.sort_values('timestamp', inplace=True)
+    # dataset_throughput.sort_values('timestamp', inplace=True)
     
-    # change some columns positions according feature selection: Recursive Feature Selection (RFE)
-    columnsTitles = ['delta_sys_time','year',
-                     'month','weekday',
-                     'day','hour','minute',
-                     'second','iteration',
+    ## Mutual Information-Regression ##
+    columnsTitles = ['year',
                      'connect_time',
-                     'request_ticks','delta_user_time',
-                     'rate','received',
-                     'delay','tcp_mean_wind','downthpt']
+                     'delay',
+                     'hour',
+                     'minute',
+                     'month',
+                     'request_ticks',
+                     'day',
+                     'second',
+                     'weekday',
+                     'iteration',
+                     'delta_sys_time',
+                     'tcp_mean_wind',
+                     'rate',
+                     'received',
+                     'delta_user_time',
+                     'downthpt']
     dataset_throughput = dataset_throughput.reindex(columns=columnsTitles)
-
-    dataset = dataset_throughput.iloc[:, 4:]
+    dataset = dataset_throughput.iloc[:, 8:]
+    print(dataset.columns)
     dataset = dataset.astype('float32')
     print(dataset.shape)
     TRAIN_SIZE = int(len(dataset) * 0.80) # 80% train set
     VALID_SIZE = int(len(dataset) * 0.90) # 10% valid and test set
 
-    # normalization #
+    ## normalization ##
     # onehot_encoder = OneHotEncoder(sparse=False, categories='auto')
     # here we going to normalize the categorical features with One Hot Encoder
-    col = ['hour','day','minute','second','iteration']
+    col = ['second','weekday','iteration']
     dataset = one_hot_encoder(dataset, col)
-
     dataset_train = dataset.iloc[:TRAIN_SIZE, :]
     print('\nTraining Set: ', dataset_train.shape)
     dataset_val = dataset.iloc[TRAIN_SIZE:VALID_SIZE, :]
@@ -235,7 +243,6 @@ if __name__ == "__main__":
     dataset_test = dataset.iloc[VALID_SIZE:, :]
     print('\nTest Set: ', dataset_test.shape)
 
-    # We are going to use StandardScaler from sklearn library to scale the data
     # We are going to use StandardScaler from sklearn library to scale the data
     # scaler = MinMaxScaler(feature_range=(0, 1))
     # scaler = StandardScaler()
@@ -262,16 +269,16 @@ if __name__ == "__main__":
     test_X = test_X.reshape((test_X.shape[0], 1, test_X.shape[1]))
     print(train_X.shape, train_y.shape, val_X.shape, val_y.shape)
     """
-    # print('\nFinished onehot encoder')
-
+    
     # normalization with downthpt!
-    f_columns = ['day','hour',
-                 'minute','second','iteration',
-                 'connect_time','request_ticks',
-                 'delta_user_time',
-                 'rate','received',
-                 'delay','tcp_mean_wind']
-
+    f_columns = ['second',
+                 'weekday',
+                 'iteration',
+                 'delta_sys_time',
+                 'tcp_mean_wind',
+                 'rate',
+                 'received',
+                 'delta_user_time']
     scaler_transf = MinMaxScaler(feature_range=(0, 1))
     scaler_target = MinMaxScaler(feature_range=(0, 1))
     # f_transformer = StandardScaler()
@@ -304,7 +311,7 @@ if __name__ == "__main__":
     print(X_train.shape, y_train.shape, X_test.shape, y_test.shape)
     
     # build the model: 
-    print('\nBuild model...')
+    print('\nBuild GRU model...')
     hist, model = compile_fit(X_train, y_train, X_val, y_val)
 
     # plot the model performence
@@ -328,7 +335,7 @@ if __name__ == "__main__":
     mse = sqrt(mean_squared_error(y_test_inv.flatten(), y_pred_inv.flatten()))
     print('\nTest MSE: %.3f' % mse)
 
-    # plot the prediction performence
+    # plot the prediction performance
     plot_prediction_history(y_train, y_train_inv, y_test, y_test_inv, y_pred_inv);
     plot_prediction_downthpt(y_pred_inv, y_test_inv)
     
