@@ -2,22 +2,20 @@
 # coding: utf-8
 
 # Let’s import the libraries that we are going to use for data manipulation, visualization, training the model, etc.
-# import library to ploting
 import matplotlib.pyplot as plt
 import matplotlib.image  as mpimg
 from matplotlib import rc
 import seaborn as sns
 sns.set_context("paper", font_scale=1.3)
 sns.set_style('white')
+
 import pandas as pd
 from math import sqrt
-# pd.set_option('display.float_format', lambda x: '%.4f' % x)
 import numpy as np
-# avoid alert
 import warnings
 warnings.filterwarnings('ignore')
 from scipy import stats
-# Import library to preprocessing
+
 from sklearn.preprocessing import RobustScaler
 from sklearn.preprocessing import OrdinalEncoder
 from sklearn.preprocessing import LabelEncoder
@@ -25,13 +23,12 @@ from sklearn.preprocessing import OneHotEncoder
 from sklearn.preprocessing import StandardScaler
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import RobustScaler
-# performace metrics libray
+
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import mean_absolute_error
-# select the GPU
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
-# import library modules keras and tensorflow
+
 from keras.layers import *
 import tensorflow as tf
 from keras.models import Sequential, Model, Input
@@ -161,7 +158,7 @@ def model_lstm_bid(train):
 
 # fit model
 def compile_fit(train, target_train, test, target_test):
-    EPOCHS = 40 # previous = 40
+    EPOCHS = 60 # previous = 40
     BATCH_SIZE = 64
     model = model_lstm(train)
     model.summary()
@@ -172,7 +169,7 @@ def compile_fit(train, target_train, test, target_test):
     model.compile(loss='mean_squared_error', optimizer=sgd_0, metrics=['mean_absolute_error', 'mean_squared_error'])
     early_stop = keras.callbacks.EarlyStopping(monitor='val_loss',
                                                min_delta=0, 
-                                               patience=30, # previous = 30
+                                               patience=50, # previous = 30
                                                verbose=1, 
                                                mode='max',
                                                baseline=None,
@@ -234,8 +231,8 @@ if __name__ == "__main__":
     ## normalization ##
     # onehot_encoder = OneHotEncoder(sparse=False, categories='auto')
     # here we going to normalize the categorical features with One Hot Encoder
-    col = ['second','weekday','iteration']
-    dataset = one_hot_encoder(dataset, col)
+    # col = ['second','weekday','iteration']
+    # dataset = one_hot_encoder(dataset, col)
     dataset_train = dataset.iloc[:TRAIN_SIZE, :]
     print('\nTraining Set: ', dataset_train.shape)
     dataset_val = dataset.iloc[TRAIN_SIZE:VALID_SIZE, :]
@@ -257,12 +254,10 @@ if __name__ == "__main__":
     train_arr = scaler.fit_transform(dataset_train)
     val_arr = scaler.transform(dataset_val)
     test_arr = scaler.transform(dataset_test)
-
     # split into input and outputs
     train_X, train_y = train_arr[:, :-1], train_arr[:, -1]
     val_X, val_y = val_arr[:, :-1], val_arr[:, -1]
     test_X, test_y = test_arr[:, :-1], test_arr[:, -1]
-
     # reshape input to be 3D [samples, timesteps, features]
     train_X = train_X.reshape((train_X.shape[0], 1, train_X.shape[1]))
     val_X = val_X.reshape((val_X.shape[0], 1, val_X.shape[1]))
@@ -344,4 +339,3 @@ if __name__ == "__main__":
     print("\nSaved model...")
     # model.save_weights('./../output_files/model_lstm_train.h5')
     print('\nFinished training...')
-    
