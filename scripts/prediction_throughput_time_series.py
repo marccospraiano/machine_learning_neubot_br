@@ -29,17 +29,20 @@ from sklearn.metrics import mean_absolute_error
 import os
 os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
 
+import keras
+from tensorflow.keras import backend as K
 from keras.layers import *
 import tensorflow as tf
-from keras.models import Sequential, Model, Input
+from keras.layers.advanced_activations import LeakyReLU, PReLU
+from keras.layers import MaxPool1D, Activation, Conv1D, Conv2D, MaxPool2D, Flatten, TimeDistributed
 from keras.layers import Dense, LSTM, GRU, Dropout, Bidirectional, BatchNormalization
-import matplotlib.image  as mpimg
-from keras.callbacks import TensorBoard, ReduceLROnPlateau, ModelCheckpoint
-from keras import optimizers, regularizers, initializers
-import keras
+from keras.models import Model, Input, Sequential
+from keras.callbacks import TensorBoard, ReduceLROnPlateau, EarlyStopping, ModelCheckpoint
+from tensorflow.keras.optimizers import SGD, RMSprop, Adam
+from keras import optimizers
 
 
-def plot_prediction_history(train, train_inv, test, test_inv, pred_inv):
+def plot_prediction_window(train, train_inv, test, test_inv, pred_inv):
     plt.figure(figsize=(10, 6))
     plt.plot(np.arange(0, len(train)), train_inv.flatten(), 'g', label="History")
     plt.plot(np.arange(len(train), len(train) + len(test)), test_inv.flatten(), marker='.', label="True")
@@ -117,6 +120,7 @@ def plot_history_loss(history):
     # plt.ylabel("Loss")
     # plt.legend(["Loss"])
 
+    
 def create_dataset(X, y, time_steps=1):
     Xs, ys = [], []
     for i in range(len(X) - time_steps):
@@ -125,42 +129,44 @@ def create_dataset(X, y, time_steps=1):
         ys.append(y[i + time_steps])
     return np.array(Xs), np.array(ys)
 
-def transform_dataset(dataset, look_back=1):
-    data, label = [], []
-    for i in range(len(dataset)-look_back-1):
-        a = dataset[i:(i+look_back)]
-        data.append(a)
-        label.append(dataset[i + look_back, 0])
-    return np.array(data), np.array(label)
 
-def model_lstm(train):
-    input_x = Input(shape=(train.shape[1], train.shape[2]))
-    initializer_0 = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
-    # initializer_1 = keras.initializers.TruncatedNormal(mean=0.0, stddev=0.05, seed=None)
-    x = GRU(units=64, activation='tanh', kernel_initializer=initializer_0, return_sequences=True)(input_x)
-    x = GRU(units=64, activation='tanh', kernel_initializer=initializer_0, return_sequences=False)(x)
-    # x = LSTM(units=64, activation='tanh', kernel_initializer=initializer_1, return_sequences=False)(x)
-    # x = LSTM(units=16, activation='tanh', return_sequences=False)(x)
-    x = Dropout(rate=0.1)(x) # previous = rate=0.2
-    x = Dense(units=1)(x)
-    model = Model(inputs=input_x, outputs=x)
-    return model
+def normalise_data(rawdata, normalise):
+    _, m = rawdata.shape
+    scale = np.ones(m, dtype='float32')
+    if normalise == 0: # do not normalise
+        data = rawdata
+        
+    if normalise == 1: # same normalisation for all timeseries
+        data = rawdata / np.max(rawdata)
+        
+    if normalise == 2: # normalise each timeseries alone. This is the default mode
+        for i in range(m):
+            scale[i] = np.max(np.abs(rawdata[:, i]))
+            data[:, i] = rawdata[:, i] / scale[i]
+    return data
 
-# modeling my LSTM with API Keras:Bidirectional
-def model_lstm_bid(train):
+
+def create_model(train):
     input_x = Input(shape=(train.shape[1], train.shape[2]))
-    x = Bidirectional(LSTM(units=64, activation='relu'))(input_x)
-    x = BatchNormalization()(x)
-    x = Dropout(rate=0.1)(x)
+    # initializer_0 = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
+    # TruncatedNormal = keras.initializers.TruncatedNormal(mean=0.5, stddev=0.05, seed=None)
+    x = Conv1D(filters=64, kernel_size=2, strides=1)(input_x)
+    x = Activation('relu')(x)
+    x = Conv1D(filters=64, kernel_size=2, strides=1)(x)
+    x = Activation('relu')(x)
+    # x = MaxPool1D(strides=2)(x)
+    x = GRU(64, kernel_initializer='RandomUniform')(x)
+    x = Activation('tanh')(x)
+    x = Dropout(rate=0.2)(x)
     x = Dense(units=1)(x)
     model = Model(inputs=input_x, outputs=x)
     return model
 
 # fit model
 def compile_fit(train, target_train, test, target_test):
-    EPOCHS = 60 # previous = 40
+    EPOCHS = 30 # previous = 40
     BATCH_SIZE = 64
-    model = model_lstm(train)
+    model = create_model(train)
     model.summary()
     sgd_0 = optimizers.SGD(lr=0.05, decay=1e-5, momentum=0.9) # previous lr=0.05, decay=1e-5, momentum=0.9)
     sgd_1 = optimizers.SGD(lr=0.5, decay=0, nesterov=True)
@@ -169,7 +175,7 @@ def compile_fit(train, target_train, test, target_test):
     model.compile(loss='mean_squared_error', optimizer=sgd_0, metrics=['mean_absolute_error', 'mean_squared_error'])
     early_stop = keras.callbacks.EarlyStopping(monitor='val_loss',
                                                min_delta=0, 
-                                               patience=50, # previous = 30
+                                               patience=25, # previous = 30
                                                verbose=1, 
                                                mode='max',
                                                baseline=None,
@@ -225,8 +231,8 @@ if __name__ == "__main__":
     print(dataset.columns)
     dataset = dataset.astype('float32')
     print(dataset.shape)
-    TRAIN_SIZE = int(len(dataset) * 0.80) # 80% train set
-    VALID_SIZE = int(len(dataset) * 0.90) # 10% valid and test set
+    TRAIN_SIZE = int(len(dataset) * 0.60) # 60% train set
+    VALID_SIZE = int(len(dataset) * 0.80) # 20% valid and test set
 
     ## normalization ##
     # onehot_encoder = OneHotEncoder(sparse=False, categories='auto')
@@ -326,12 +332,16 @@ if __name__ == "__main__":
     mae = sqrt(mean_absolute_error(y_test_inv.flatten(), y_pred_inv.flatten()))
     print('\nTest MAE: %.3f' % mae)
     
-    # calculate MAE
-    mse = sqrt(mean_squared_error(y_test_inv.flatten(), y_pred_inv.flatten()))
+     # Mean Squared Error
+    mse = mean_squared_error(y_test_inv.flatten(), y_pred_inv.flatten())
     print('\nTest MSE: %.3f' % mse)
+    
+    # Root Mean Squared Error
+    rmse = sqrt(mean_squared_error(y_test_inv.flatten(), y_pred_inv.flatten()))
+    print('\nTest RMSE: %.3f' % rmse)
 
     # plot the prediction performance
-    plot_prediction_history(y_train, y_train_inv, y_test, y_test_inv, y_pred_inv);
+    plot_prediction_window(y_train, y_train_inv, y_test, y_test_inv, y_pred_inv);
     plot_prediction_downthpt(y_pred_inv, y_test_inv)
     
     model.save('./../output_files/train_model.h5')  # creates a HDF5 file 'model_train.h5'
