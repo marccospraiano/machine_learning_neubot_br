@@ -6,8 +6,6 @@ import matplotlib.pyplot as plt
 import matplotlib.image  as mpimg
 from matplotlib import rc
 import seaborn as sns
-sns.set_context("paper", font_scale=1.3)
-sns.set_style('white')
 
 import pandas as pd
 from math import sqrt
@@ -53,7 +51,8 @@ def plot_prediction_window(train, train_inv, test, test_inv, pred_inv):
     plt.savefig(os.path.join('./../plots', 'prediction.jpg'))
     plt.grid(True)
     plt.show();
-      
+
+    
 def plot_prediction_downthpt(pred_inv, test_inv):
     plt.figure(figsize=(10, 6))
     plt.plot(test_inv.flatten(), marker='.', label="True")
@@ -65,7 +64,7 @@ def plot_prediction_downthpt(pred_inv, test_inv):
     plt.grid(True)
     plt.show();
 
-# plot MSE
+
 def plot_history_mse(history):
     plt.figure(figsize=(10, 6))
     plt.plot(history.history['mean_squared_error'], marker='.')
@@ -78,7 +77,7 @@ def plot_history_mse(history):
     plt.grid(True)
     plt.show()
 
-# plot MAE
+    
 def plot_history_mae(history):
     plt.figure(figsize=(10, 6))
     plt.plot(history.history['mean_absolute_error'], marker='.')
@@ -91,7 +90,7 @@ def plot_history_mae(history):
     plt.grid(True)
     plt.show()
     
-# plot loss
+    
 def plot_history_loss(history):
     plt.figure(figsize=(10, 6))
     #-----------------------------------------------------------
@@ -148,34 +147,31 @@ def normalise_data(rawdata, normalise):
 
 def create_model(train):
     input_x = Input(shape=(train.shape[1], train.shape[2]))
-    # initializer_0 = keras.initializers.RandomNormal(mean=0.0, stddev=0.05, seed=None)
-    # TruncatedNormal = keras.initializers.TruncatedNormal(mean=0.5, stddev=0.05, seed=None)
-    x = Conv1D(filters=64, kernel_size=2, strides=1)(input_x)
+    x = Conv1D(filters=100, kernel_size=2, strides=1)(input_x)
+    x = Conv1D(filters=100, kernel_size=2, strides=1)(input_x)
+    x = Dropout(rate=0.2)(x)
     x = Activation('relu')(x)
-    x = Conv1D(filters=64, kernel_size=2, strides=1)(x)
+    x = GRU(100, kernel_initializer='glorot_uniform')(x)
     x = Activation('relu')(x)
-    # x = MaxPool1D(strides=2)(x)
-    x = GRU(64, kernel_initializer='RandomUniform')(x)
-    x = Activation('tanh')(x)
     x = Dropout(rate=0.2)(x)
     x = Dense(units=1)(x)
     model = Model(inputs=input_x, outputs=x)
     return model
 
-# fit model
+
 def compile_fit(train, target_train, test, target_test):
-    EPOCHS = 30 # previous = 40
-    BATCH_SIZE = 64
+    EPOCHS = 80 # previous = 40
+    BATCH_SIZE = 128
     model = create_model(train)
     model.summary()
-    sgd_0 = optimizers.SGD(lr=0.05, decay=1e-5, momentum=0.9) # previous lr=0.05, decay=1e-5, momentum=0.9)
+    sgd_0 = optimizers.SGD(lr=0.001, decay=1e-5, momentum=0.9) # previous lr=0.05, decay=1e-5, momentum=0.9)
     sgd_1 = optimizers.SGD(lr=0.5, decay=0, nesterov=True)
-    sgd_2 = optimizers.Adam(learning_rate=0.7)
+    sgd_2 = optimizers.Adam(learning_rate=0.001)
     # model.compile(loss=tf.keras.losses.Huber(), optimizer=sgd_1, metrics=['mean_absolute_error', 'mean_squared_error'])
-    model.compile(loss='mean_squared_error', optimizer=sgd_0, metrics=['mean_absolute_error', 'mean_squared_error'])
+    model.compile(loss='mean_absolute_error', optimizer=sgd_2, metrics=['mean_absolute_error', 'mean_squared_error'])
     early_stop = keras.callbacks.EarlyStopping(monitor='val_loss',
                                                min_delta=0, 
-                                               patience=25, # previous = 30
+                                               patience=70, # previous = 30
                                                verbose=1, 
                                                mode='max',
                                                baseline=None,
@@ -192,6 +188,7 @@ def compile_fit(train, target_train, test, target_test):
                         verbose=1)
     return history, model
 
+
 def one_hot_encoder(df, col):
     onehot_encoder = OneHotEncoder(sparse=False, categories='auto')
     for c in col:        
@@ -200,6 +197,7 @@ def one_hot_encoder(df, col):
         v = onehot_encoder.fit_transform(v)
         df[c] = v
     return df
+    
     
 if __name__ == "__main__":
 
