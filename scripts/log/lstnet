@@ -1,0 +1,4 @@
+2020-03-16 11:09:28.32 (31010) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-16 11:09:28.33 (31010) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-16 11:09:28.33 (31010) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
