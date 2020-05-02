@@ -374,8 +374,7 @@ if __name__ == "__main__":
     plot_mse(hist)
     
     # make predictions whith test set with
-    """
-    print('\nMake Predictions...')
+    print('\nMaking Predictions...')
     y_pred = model.predict(X_test)
     y_train_inv = scaler_target.inverse_transform(y_train.reshape(1,-1))
     y_test_inv = scaler_target.inverse_transform(y_test.reshape(1, -1))
@@ -389,12 +388,11 @@ if __name__ == "__main__":
     rmse = sqrt(mean_squared_error(y_test_inv.flatten(), y_pred_inv.flatten()))
     print('\nTest RMSE: %.3f' % rmse)
 
-    plot the prediction performance
+    # plot the prediction performance
     plot_prediction_window(y_train, y_train_inv, y_test, y_test_inv, y_pred_inv);
     plot_prediction_downthpt(y_pred_inv, y_test_inv)
-    """
     
-    model.save('./../output_files/train_model.h5')  # creates a HDF5 file 'model_train.h5'
+    model.save('./../output_file/train_model.h5')  # creates a HDF5 file 'model_train.h5'
     del model  # deletes the existing model
     print("\nSaved model...")
     # model.save_weights('./../output_files/model_lstm_train.h5')

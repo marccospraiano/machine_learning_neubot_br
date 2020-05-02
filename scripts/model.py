@@ -3,11 +3,12 @@ import numpy as np
 import tensorflow as tf
 
 from tensorflow.keras.models import Model, model_from_json
-from tensorflow.keras.layers import Input, GRU, Bidirectional, LSTM, Conv2D, Dropout, Flatten, Dense, Reshape, Concatenate, Add
+from tensorflow.keras.layers import Input, GRU, Bidirectional, LeakyReLU, LSTM, Conv2D, Dropout, Flatten, Dense, Reshape, Concatenate, Add, Activation
 from tensorflow.keras.optimizers import SGD, RMSprop, Adam
 
 from tensorflow.keras import backend as K
 from tensorflow.keras.callbacks import TensorBoard
+# from keras.layers import LeakyReLU
 
 #######################################################################################################################
 #                                      Start Skip RNN specific layers subsclass                                       #
@@ -225,9 +226,9 @@ class PostARTrans(tf.keras.layers.Layer):
     
     def call(self, inputs):
         # Get input tensors
-	# - First one is the output of the Dense(1) layer which we will operate on
-	# - The second is the original model input tensor which we will use to get
-	#   the original batchsize
+        # - First one is the output of the Dense(1) layer which we will operate on
+        # - The second is the original model input tensor which we will use to get
+        #   the original batchsize
         x, original_model_input = inputs
 
         # Get the batchsize which is tf.shape(original_model_input)[0]
@@ -295,8 +296,8 @@ def LSTNetModel(init, input_shape):
     if init.CNNFilters > 0 and init.CNNKernel > 0:
         # Add an extra dimension of size 1 which is the channel dimension in Conv2D
         C = Reshape((input_shape[1], input_shape[2], 1))(X)
-
-	# Apply a Conv2D that will transform it into data of dimensions (batchsize, time, 1, NumofFilters)
+        
+        # Apply a Conv2D that will transform it into data of dimensions (batchsize, time, 1, NumofFilters)
         C = Conv2D(filters=init.CNNFilters, kernel_size=(init.CNNKernel, m), kernel_initializer=init.initialiser)(C)
         C = Dropout(init.dropout)(C)
 
@@ -304,13 +305,16 @@ def LSTNetModel(init, input_shape):
         c_shape = K.int_shape(C)
         C = Reshape((c_shape[1], c_shape[3]))(C)
     else:
-	# If configured not to apply CNN, copy the input
+        # If configured not to apply CNN, copy the input
         C = X
     
-    # GRU
-    # Apply a GRU layer (with activation set to 'relu' as per the paper) and take the returned states as result
-    R = Bidirectional(LSTM(init.GRUUnits, activation='relu', return_sequences=True, return_state=True, kernel_initializer=init.initialiser))(C)
-    R = Bidirectional(LSTM(init.GRUUnits, activation='relu', return_sequences=False, return_state=False, kernel_initializer=init.initialiser))(R)
+    # LSTM
+    # Apply two LSTM layer (with activation set to 'relu' as per the paper) and take the returned states as result
+    
+    R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=True, 
+                           return_state=True, kernel_initializer=init.initialiser))(C)
+    R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=False, 
+                           return_state=False, kernel_initializer=init.initialiser))(R)
     R = Dropout(init.dropout)(R)
     
 
@@ -320,7 +324,8 @@ def LSTNetModel(init, input_shape):
         pt   = int(init.window / init.skip)
 
         S    = PreSkipTrans(pt, int((init.window - init.CNNKernel + 1) / pt))(C)
-        _, S = GRU(init.SkipGRUUnits, activation="relu", return_sequences = False, return_state = True)(S)
+        _, S = Bidirectional(LSTM(init.SkipGRUUnits, activation='selu',
+                   return_sequences=False, return_state=True))(S)
         S    = PostSkipTrans(int((init.window - init.CNNKernel + 1) / pt))([S,X])
 
 	# Concatenate the outputs of GRU and SkipGRU
@@ -334,6 +339,7 @@ def LSTNetModel(init, input_shape):
     if init.highway > 0:
         Z = PreARTrans(init.highway)(X)
         Z = Flatten()(Z)
+        Z = Activation('relu')(Z)
         Z = Dense(1)(Z)
         Z = PostARTrans(m)([Z,X])
 

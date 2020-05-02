@@ -1,0 +1,39 @@
+2020-04-28 04:31:50.134 (23010) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-04-28 04:31:50.135 (23010) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-04-28 04:31:50.135 (23010) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-04-28 04:34:21.129 (23010) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-04-28 04:34:54.768 (23010) (INFO) main.<module> -> Training shape: X:(9796103, 11, 9) Y:(9796103, 9)
+2020-04-28 04:34:54.768 (23010) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 9) Y:(1224515, 9)
+2020-04-28 04:34:54.768 (23010) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 9) Y:(1224516, 9)
+2020-04-28 04:34:54.768 (23010) (INFO) main.<module> -> Load model from ../output_file/model20200424
+2020-04-28 04:34:54.768 (23010) (INFO) model_util.LoadModel -> Loading model and weights ...
+2020-04-28 04:34:56.564 (23010) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-04-28 04:38:00.542 (23010) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.102276, RSE:0.761424, MAE:0.102276
+2020-04-28 04:38:00.542 (23010) (INFO) main.<module> -> Predict testing data
+2020-04-28 04:40:53.667 (23010) (INFO) plots.PlotPrediction -> Plotting Prediction ...
+2020-04-28 04:44:39.497 (23121) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-04-28 04:44:39.497 (23121) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-04-28 04:44:39.498 (23121) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-04-28 04:44:39.498 (23121) (CRITICAL) main.<module> -> Could not load data!! Exiting
+2020-04-28 04:45:00.807 (23144) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-04-28 04:45:00.808 (23144) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-04-28 04:45:00.808 (23144) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-04-28 04:45:00.809 (23144) (CRITICAL) main.<module> -> Could not load data!! Exiting
+2020-04-28 04:47:02.773 (23201) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-04-28 04:47:02.774 (23201) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-04-28 04:47:02.774 (23201) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-04-28 04:47:19.485 (23220) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-04-28 04:47:19.486 (23220) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-04-28 04:47:19.486 (23220) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-04-28 04:49:49.828 (23220) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-04-28 04:50:23.437 (23220) (INFO) main.<module> -> Training shape: X:(9796103, 11, 9) Y:(9796103, 9)
+2020-04-28 04:50:23.437 (23220) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 9) Y:(1224515, 9)
+2020-04-28 04:50:23.437 (23220) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 9) Y:(1224516, 9)
+2020-04-28 04:50:23.437 (23220) (INFO) main.<module> -> Creating model
+2020-04-28 04:50:24.971 (23220) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-04-28 04:53:28.499 (23220) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.426473, RSE:2.614627, MAE:0.426472

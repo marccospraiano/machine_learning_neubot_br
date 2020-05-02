@@ -137,6 +137,7 @@ def PlotHistory(history, metrics, init):
 def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
     if Data is not None and init is not None:
         log.info("Plotting Prediction ...")
+        # print(Data.data[0])
         #
         # init.series_to_plot has the following format: series_number,start,end
         # which means that we will be plotting series # series_number from start to end
@@ -144,6 +145,7 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
         # Here we are transforming this series into a list of integers if possible
         #
         s = [int(i) if i.isdigit() else i for i in init.series_to_plot.split(',')]
+        # s = [i for i in init.series_to_plot.split(',')]
 
         #
         # Check if the first element in the list is an integer
@@ -214,22 +216,85 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
             log.debug("Filling testPredictPlot from %d to %d", start, end)
             testPredictPlot[start:end, :] = testPredict
 
+        """
         # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
         fig = plt.figure()
+        """
 
-        plt.plot(Data.data[start_plot:end_plot, series])
-        plt.plot(trainPredictPlot[start_plot:end_plot, series])
-        plt.plot(validPredictPlot[start_plot:end_plot, series])
-        plt.plot(testPredictPlot[start_plot:end_plot, series])
+        if trainPredict is not None and init.predict == 'trainingdata':
+            # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
+            fig = plt.figure()
+            plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+            plt.plot(trainPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='prediction')
+            plt.ylabel("Throughput(Mbit/s)")
+            plt.xlabel("Time Step")
+            # plt.title("Prediction Plotting for timeseries # %d" % (series))
+            plt.legend(loc='best')
+            plt.grid(True)
+            # fig.canvas.set_window_title('Prediction')
+            plt.show()
+            if init.save_plot is not None:
+                log.debug("Saving prediction plot to: %s", init.save_plot + "_prediction.png")
+                fig.savefig(init.save_plot + "_prediction.png")
 
-        plt.ylabel("Timeseries")
-        plt.xlabel("Time")
-        plt.title("Prediction Plotting for timeseries # %d" % (series))
-        
+
+        if validPredict is not None and init.predict == 'validationdata':
+            # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
+            fig = plt.figure()
+            plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+            plt.plot(validPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='prediction')
+            plt.ylabel("Throughput(Mbit/s)")
+            plt.xlabel("Time Step")
+            # plt.title("Prediction Plotting for timeseries # %d" % (series))
+            plt.legend(loc='best')
+            plt.grid(True)
+            # fig.canvas.set_window_title('Prediction')
+            plt.show()
+            if init.save_plot is not None:
+                log.debug("Saving prediction plot to: %s", init.save_plot + "_prediction.png")
+                fig.savefig(init.save_plot + "_prediction.png")
+
+
+        if testPredict is not None and init.predict == 'testingdata':
+            # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
+            fig = plt.figure()
+            plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+            plt.plot(testPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='prediction')
+            plt.ylabel("Throughput(Mbit/s)")
+            plt.xlabel("Time Step")
+            # plt.title("Prediction Plotting for timeseries # %d" % (series))
+            plt.legend(loc='best')
+            plt.grid(True)
+            # fig.canvas.set_window_title('Prediction')
+            plt.show()
+            if init.save_plot is not None:
+                log.debug("Saving prediction plot to: %s", init.save_plot + "_prediction.png")
+                fig.savefig(init.save_plot + "_prediction.png")
+
+        if trainPredict is not None and validPredict is not None and testPredict is not None:
+            if init.predict == 'all':
+                # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
+                fig = plt.figure()
+                plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+                plt.plot(trainPredictPlot[start_plot:end_plot, series], 'k--', color='orange', label='training')
+                plt.plot(validPredictPlot[start_plot:end_plot, series], 'k--', color='green', label='validation')
+                plt.plot(testPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='testing')
+                plt.ylabel("Throughput(Mbit/s)")
+                plt.xlabel("Time Step")
+                # plt.title("Prediction Plotting for timeseries # %d" % (series))
+                plt.legend(loc='best')
+                plt.grid(True)
+                # fig.canvas.set_window_title('Prediction')
+                plt.show()
+                if init.save_plot is not None:
+                    log.debug("Saving prediction plot to: %s", init.save_plot + "_prediction.png")
+                    fig.savefig(init.save_plot + "_prediction.png")
+
+        """
         fig.canvas.set_window_title('Prediction')
-
         plt.show()
 
         if init.save_plot is not None:
             log.debug("Saving prediction plot to: %s", init.save_plot + "_prediction.png")
             fig.savefig(init.save_plot + "_prediction.png")
+        """

@@ -1,0 +1,9 @@
+2020-03-29 22:42:17.194 (2482) (INFO) main.train -> Training time took: 1 day, 19:04:42.793243
+2020-03-29 22:42:17.194 (2482) (INFO) plots.PlotHistory -> Plotting history ...
+2020-03-29 22:42:17.539 (2482) (INFO) model_util.SaveModel -> Saving model and weights ...
+2020-03-29 22:42:17.539 (2482) (WARNING) model_util.SaveModel -> File ../output_file/model.json already exists. Backing it up to ../output_file/model20200329.json
+2020-03-29 22:42:17.541 (2482) (WARNING) model_util.SaveModel -> File ../output_file/model.h5 already exists. Backing it up to ../output_file/model20200329.h5
+2020-03-29 22:42:17.703 (2482) (INFO) model_util.SaveResults -> Saving results ...
+2020-03-29 22:42:17.703 (2482) (WARNING) model_util.SaveResults -> File ../output_file/model.txt already exists. Backing it up to ../output_file/model20200329.txt
+2020-03-29 22:42:17.705 (2482) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.030002, RSE:0.354923, MAE:0.030002
+2020-03-29 22:44:29.437 (2482) (INFO) main.<module> -> Validation on the test set returned: Loss:0.031225, RSE:0.352650, MAE:0.031225

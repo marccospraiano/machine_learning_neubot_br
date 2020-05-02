@@ -9,17 +9,17 @@ Training Info:
 	Optimisation Method: SGD
 	Learning Rate: 0.05
 	Batch Size: 64
-	Number of Epochs: 120
+	Number of Epochs: 150
 
 Training Results:
-	Loss: 0.029586937187227366
-	Rse: 0.34825382
-	Mean_Absolute_Error: 0.029587
+	Loss: 0.04039977826921163
+	Rse: 0.4219694
+	Mean_Absolute_Error: 0.040399794
 
 Validation Results:
-	Loss: 0.029541616570628208
-	Rse: 0.34437457
-	Mean_Absolute_Error: 0.029541671
+	Loss: 0.04026911744268473
+	Rse: 0.4153576
+	Mean_Absolute_Error: 0.04026924
 
 Model Summary:
 	Model: "model"

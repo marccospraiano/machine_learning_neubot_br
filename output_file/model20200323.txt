@@ -9,17 +9,17 @@ Training Info:
 	Optimisation Method: SGD
 	Learning Rate: 0.05
 	Batch Size: 64
-	Number of Epochs: 120
+	Number of Epochs: 100
 
 Training Results:
-	Loss: 0.029586937187227366
-	Rse: 0.34825382
-	Mean_Absolute_Error: 0.029587
+	Loss: 0.03904720192545857
+	Rse: 0.40858337
+	Mean_Absolute_Error: 0.039047174
 
 Validation Results:
-	Loss: 0.029541616570628208
-	Rse: 0.34437457
-	Mean_Absolute_Error: 0.029541671
+	Loss: 0.03796352061267189
+	Rse: 0.4024627
+	Mean_Absolute_Error: 0.037963517
 
 Model Summary:
 	Model: "model"
@@ -38,23 +38,21 @@ Model Summary:
 	__________________________________________________________________________________________________
 	bidirectional (Bidirectional)   [(None, 6, 128), (No 66048       reshape_1[0][0]                  
 	__________________________________________________________________________________________________
-	pre_ar_trans (PreARTrans)       (None, 11)           0           input_1[0][0]                    
-	__________________________________________________________________________________________________
 	bidirectional_1 (Bidirectional) (None, 128)          98816       bidirectional[0][0]              
 	                                                                 bidirectional[0][1]              
 	                                                                 bidirectional[0][2]              
 	                                                                 bidirectional[0][3]              
 	                                                                 bidirectional[0][4]              
 	__________________________________________________________________________________________________
-	flatten_1 (Flatten)             (None, 11)           0           pre_ar_trans[0][0]               
+	pre_ar_trans (PreARTrans)       (None, 11)           0           input_1[0][0]                    
 	__________________________________________________________________________________________________
 	dropout_1 (Dropout)             (None, 128)          0           bidirectional_1[0][0]            
 	__________________________________________________________________________________________________
-	activation (Activation)         (None, 11)           0           flatten_1[0][0]                  
+	flatten_1 (Flatten)             (None, 11)           0           pre_ar_trans[0][0]               
 	__________________________________________________________________________________________________
 	flatten (Flatten)               (None, 128)          0           dropout_1[0][0]                  
 	__________________________________________________________________________________________________
-	dense_1 (Dense)                 (None, 1)            12          activation[0][0]                 
+	dense_1 (Dense)                 (None, 1)            12          flatten_1[0][0]                  
 	__________________________________________________________________________________________________
 	dense (Dense)                   (None, 9)            1161        flatten[0][0]                    
 	__________________________________________________________________________________________________

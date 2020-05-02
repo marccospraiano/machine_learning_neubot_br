@@ -1,0 +1,83 @@
+2020-03-22 00:44:13.717 (30995) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 00:44:13.718 (30995) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 00:44:13.718 (30995) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 00:45:41.509 (30995) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 00:46:04.317 (30995) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 00:46:04.317 (30995) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 00:46:04.317 (30995) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 00:46:04.317 (30995) (INFO) main.<module> -> Creating model
+2020-03-22 00:55:25.263 (31067) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 00:55:25.264 (31067) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 00:55:25.264 (31067) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 00:56:52.59 (31067) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 00:57:12.183 (31067) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 00:57:12.183 (31067) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 00:57:12.184 (31067) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 00:57:12.184 (31067) (INFO) main.<module> -> Creating model
+2020-03-22 01:03:18.901 (31139) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:03:18.902 (31139) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:03:18.902 (31139) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:04:46.935 (31139) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:05:07.58 (31139) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:05:07.58 (31139) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:05:07.58 (31139) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:05:07.59 (31139) (INFO) main.<module> -> Creating model
+2020-03-22 01:18:54.896 (31239) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:18:54.896 (31239) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:18:54.896 (31239) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:20:23.625 (31239) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:20:44.644 (31239) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:20:44.644 (31239) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:20:44.644 (31239) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:20:44.644 (31239) (INFO) main.<module> -> Creating model
+2020-03-22 01:28:37.380 (31300) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:28:37.380 (31300) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:28:37.380 (31300) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:30:05.726 (31300) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:30:25.991 (31300) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:30:25.991 (31300) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:30:25.991 (31300) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:30:25.991 (31300) (INFO) main.<module> -> Creating model
+2020-03-22 01:41:08.279 (31369) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:41:08.279 (31369) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:41:08.279 (31369) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:42:33.5 (31369) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:42:52.615 (31369) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:42:52.615 (31369) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:42:52.615 (31369) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:42:52.615 (31369) (INFO) main.<module> -> Creating model
+2020-03-22 01:44:15.103 (31402) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:44:15.103 (31402) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:44:15.103 (31402) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:45:43.13 (31402) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:46:03.88 (31402) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:46:03.88 (31402) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:46:03.88 (31402) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:46:03.89 (31402) (INFO) main.<module> -> Creating model
+2020-03-22 01:48:42.462 (31443) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:48:42.462 (31443) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:48:42.462 (31443) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:50:06.895 (31443) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:50:26.399 (31443) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:50:26.400 (31443) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:50:26.400 (31443) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:50:26.400 (31443) (INFO) main.<module> -> Creating model
+2020-03-22 01:52:32.848 (31480) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-03-22 01:52:32.849 (31480) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-03-22 01:52:32.849 (31480) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-03-22 01:53:59.473 (31480) (INFO) model_util.split_data -> Splitting data into training set (0.60), validation set (0.20) and testing set (0.20)
+2020-03-22 01:54:19.534 (31480) (INFO) main.<module> -> Training shape: X:(7347072, 11, 9) Y:(7347072, 9)
+2020-03-22 01:54:19.534 (31480) (INFO) main.<module> -> Validation shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:54:19.534 (31480) (INFO) main.<module> -> Testing shape: X:(2449031, 11, 9) Y:(2449031, 9)
+2020-03-22 01:54:19.534 (31480) (INFO) main.<module> -> Creating model
+2020-03-22 01:54:20.321 (31480) (INFO) main.<module> -> Model compiled ... Open tensorboard in order to visualise it!
+2020-03-22 01:54:20.321 (31480) (INFO) main.<module> -> Training model ... 
