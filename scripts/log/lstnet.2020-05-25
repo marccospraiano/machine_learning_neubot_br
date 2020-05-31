@@ -1,0 +1,33 @@
+2020-05-25 08:07:40.626 (18216) (INFO) main.train -> Training time took: 2 days, 23:46:48.221297
+2020-05-25 08:07:40.626 (18216) (INFO) plots.PlotHistory -> Plotting history ...
+2020-05-25 08:07:40.975 (18216) (INFO) model_util.SaveModel -> Saving model and weights ...
+2020-05-25 08:07:41.154 (18216) (INFO) model_util.SaveResults -> Saving results ...
+2020-05-25 08:07:41.156 (18216) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.035799, RSE:0.382748, MAE:0.035799
+2020-05-25 22:11:23.1 (6541) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-05-25 22:11:23.1 (6541) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-05-25 22:11:23.1 (6541) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-05-25 22:12:49.354 (6541) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-05-25 22:13:10.6 (6541) (INFO) main.<module> -> Training shape: X:(9796095, 15, 9) Y:(9796095, 9)
+2020-05-25 22:13:10.6 (6541) (INFO) main.<module> -> Validation shape: X:(1224515, 15, 9) Y:(1224515, 9)
+2020-05-25 22:13:10.6 (6541) (INFO) main.<module> -> Testing shape: X:(1224516, 15, 9) Y:(1224516, 9)
+2020-05-25 22:13:10.6 (6541) (INFO) main.<module> -> Load model from ../result/model_mbits
+2020-05-25 22:13:10.6 (6541) (INFO) model_util.LoadModel -> Loading model and weights ...
+2020-05-25 22:13:10.977 (6541) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-05-25 22:14:52.952 (6541) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.035799, RSE:0.379539, MAE:0.035799
+2020-05-25 22:14:52.952 (6541) (INFO) main.<module> -> Predict testing data
+2020-05-25 22:16:27.715 (6541) (INFO) plots.PlotPrediction -> Plotting Prediction ...
+2020-05-25 22:20:04.645 (6628) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-05-25 22:20:04.646 (6628) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-05-25 22:20:04.646 (6628) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-05-25 22:21:31.162 (6628) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-05-25 22:21:52.17 (6628) (INFO) main.<module> -> Training shape: X:(9796095, 15, 9) Y:(9796095, 9)
+2020-05-25 22:21:52.17 (6628) (INFO) main.<module> -> Validation shape: X:(1224515, 15, 9) Y:(1224515, 9)
+2020-05-25 22:21:52.17 (6628) (INFO) main.<module> -> Testing shape: X:(1224516, 15, 9) Y:(1224516, 9)
+2020-05-25 22:21:52.17 (6628) (INFO) main.<module> -> Load model from ../result/model_mbits
+2020-05-25 22:21:52.17 (6628) (INFO) model_util.LoadModel -> Loading model and weights ...
+2020-05-25 22:21:52.994 (6628) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-05-25 22:23:34.324 (6628) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.035799, RSE:0.379539, MAE:0.035799
+2020-05-25 22:23:34.324 (6628) (INFO) main.<module> -> Predict validation data
+2020-05-25 22:25:08.979 (6628) (INFO) plots.PlotPrediction -> Plotting Prediction ...

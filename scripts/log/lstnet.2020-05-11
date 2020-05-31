@@ -1,0 +1,37 @@
+2020-05-11 18:25:59.211 (20528) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-05-11 18:25:59.212 (20528) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-05-11 18:25:59.212 (20528) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-05-11 18:27:24.569 (20528) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-05-11 18:27:43.346 (20528) (INFO) main.<module> -> Training shape: X:(9796115, 5, 9) Y:(9796115, 9)
+2020-05-11 18:27:43.346 (20528) (INFO) main.<module> -> Validation shape: X:(1224515, 5, 9) Y:(1224515, 9)
+2020-05-11 18:27:43.346 (20528) (INFO) main.<module> -> Testing shape: X:(1224516, 5, 9) Y:(1224516, 9)
+2020-05-11 18:27:43.346 (20528) (INFO) main.<module> -> Creating model
+2020-05-11 18:29:10.486 (20562) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-05-11 18:29:10.487 (20562) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-05-11 18:29:10.487 (20562) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-05-11 18:30:33.236 (20562) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-05-11 18:30:54.479 (20562) (INFO) main.<module> -> Training shape: X:(9796095, 15, 9) Y:(9796095, 9)
+2020-05-11 18:30:54.479 (20562) (INFO) main.<module> -> Validation shape: X:(1224515, 15, 9) Y:(1224515, 9)
+2020-05-11 18:30:54.479 (20562) (INFO) main.<module> -> Testing shape: X:(1224516, 15, 9) Y:(1224516, 9)
+2020-05-11 18:30:54.479 (20562) (INFO) main.<module> -> Creating model
+2020-05-11 18:30:55.304 (20562) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-05-11 18:30:55.304 (20562) (INFO) main.<module> -> Training model ... 
+2020-05-11 19:42:48.515 (20562) (INFO) main.train -> Training time took: 1:11:53.211330
+2020-05-11 19:42:48.515 (20562) (INFO) plots.PlotHistory -> Plotting history ...
+2020-05-11 19:42:48.844 (20562) (INFO) model_util.SaveModel -> Saving model and weights ...
+2020-05-11 19:42:49.20 (20562) (INFO) model_util.SaveResults -> Saving results ...
+2020-05-11 19:42:49.22 (20562) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.009461, RSE:1.907169, MAE:0.009461
+2020-05-11 19:44:31.605 (20562) (INFO) main.<module> -> Validation on the test set returned: Loss:0.009377, RSE:7.887630, MAE:0.009377
+2020-05-11 19:56:24.583 (20987) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-05-11 19:56:24.583 (20987) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-05-11 19:56:24.583 (20987) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-05-11 19:57:49.180 (20987) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-05-11 19:58:09.817 (20987) (INFO) main.<module> -> Training shape: X:(9796095, 15, 9) Y:(9796095, 9)
+2020-05-11 19:58:09.817 (20987) (INFO) main.<module> -> Validation shape: X:(1224515, 15, 9) Y:(1224515, 9)
+2020-05-11 19:58:09.817 (20987) (INFO) main.<module> -> Testing shape: X:(1224516, 15, 9) Y:(1224516, 9)
+2020-05-11 19:58:09.817 (20987) (INFO) main.<module> -> Creating model
+2020-05-11 19:58:10.634 (20987) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-05-11 19:58:10.634 (20987) (INFO) main.<module> -> Training model ... 
