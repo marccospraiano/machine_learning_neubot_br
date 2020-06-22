@@ -12,17 +12,19 @@ Training Info:
 	Number of Epochs: 130
 
 Training Results:
-	Loss: 0.00026752831891376606
-	Rse: 0.020269081
-	Mean_Absolute_Error: 0.0002675301
+	Loss: 0.0002658601348597909
+	Rse: 0.020209698
+	Mean_Absolute_Error: 0.00026586265
 
 Validation Results:
-	Loss: 0.0005856226894811017
-	Rse: 0.04756709
-	Mean_Absolute_Error: 0.0005856219
+	Loss: 0.00034412781560985034
+	Rse: 0.046509907
+	Mean_Absolute_Error: 0.00034412774
     
-INFO:lstnet:Validation on the test set returned: Loss:0.060777, RSE:0.622403, MAE:0.060777
-INFO:lstnet:Validation on the validation set returned: Loss:0.060260, RSE:0.612483, MAE:0.060260
+INFO:lstnet:Saving results ...
+INFO:lstnet:Validation on the validation set returned: Loss:0.000344, RSE:0.046510, MAE:0.000344
+1224516/1224516 [==============================] - 138s 113us/sample - loss: 3.9710e-04 - rse: 5.6844 - mean_absolute_error: 3.9710e-04
+INFO:lstnet:Validation on the test set returned: Loss:0.000397, RSE:5.684423, MAE:0.000397
 
 Model Summary:
 	Model: "model"

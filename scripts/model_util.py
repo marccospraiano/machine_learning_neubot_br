@@ -317,7 +317,7 @@ def get_arguments():
         parser.add_argument('--highway', type=int, default=11, help='The window size of the highway component. Default=11. If set to 0, the AR layer will be omitted')
         parser.add_argument('--lr', type=float, default=0.05, help='Learning rate. Default=0.001')
         parser.add_argument('--batchsize', type=int, default=64, help='Training batchsize. Default=64')
-        parser.add_argument('--epochs', type=int, default=120, help='Number of epochs to run for training. Default=100')
+        parser.add_argument('--epochs', type=int, default=130, help='Number of epochs to run for training. Default=100')
         parser.add_argument('--dropout', type=float, default=0.1, help='Dropout to be applied to layers. 0 means no dropout. Default=0.2')
         parser.add_argument('--initializer', type=str, default="RandomNormal", help='Weights initialiser to use. Default=glorot_uniform')
         parser.add_argument('--loss', type=str, default="mean_absolute_error", help='Loss function to use. Default=mean_absolute_error')

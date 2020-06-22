@@ -1,0 +1,11 @@
+2020-06-01 06:37:34.449 (12455) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-06-01 06:37:34.450 (12455) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-06-01 06:37:34.450 (12455) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-06-01 06:39:04.669 (12455) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-06-01 06:39:25.614 (12455) (INFO) main.<module> -> Training shape: X:(9796103, 11, 10) Y:(9796103, 10)
+2020-06-01 06:39:25.614 (12455) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 10) Y:(1224515, 10)
+2020-06-01 06:39:25.614 (12455) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 10) Y:(1224516, 10)
+2020-06-01 06:39:25.614 (12455) (INFO) main.<module> -> Creating model
+2020-06-01 06:39:26.426 (12455) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-06-01 06:39:26.426 (12455) (INFO) main.<module> -> Training model ... 
