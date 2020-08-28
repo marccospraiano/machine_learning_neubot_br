@@ -1,0 +1,28 @@
+2020-07-14 03:19:50.828 (1509) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-07-14 03:19:50.829 (1509) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-07-14 03:19:50.829 (1509) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-07-14 03:21:44.749 (1509) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-07-14 03:22:06.317 (1509) (INFO) main.<module> -> Training shape: X:(9796103, 11, 14) Y:(9796103, 14)
+2020-07-14 03:22:06.317 (1509) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 14) Y:(1224515, 14)
+2020-07-14 03:22:06.317 (1509) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 14) Y:(1224516, 14)
+2020-07-14 03:22:06.317 (1509) (INFO) main.<module> -> Creating model
+2020-07-14 03:22:06.593 (1509) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-07-14 03:22:06.593 (1509) (INFO) main.<module> -> Training model ... 
+2020-07-14 03:23:39.618 (1573) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-07-14 03:23:39.618 (1573) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-07-14 03:23:39.618 (1573) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-07-14 03:25:33.254 (1573) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-07-14 03:25:54.832 (1573) (INFO) main.<module> -> Training shape: X:(9796103, 11, 14) Y:(9796103, 14)
+2020-07-14 03:25:54.832 (1573) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 14) Y:(1224515, 14)
+2020-07-14 03:25:54.832 (1573) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 14) Y:(1224516, 14)
+2020-07-14 03:25:54.832 (1573) (INFO) main.<module> -> Creating model
+2020-07-14 03:25:55.66 (1573) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-07-14 03:25:55.66 (1573) (INFO) main.<module> -> Training model ... 
+2020-07-14 19:10:27.589 (1573) (INFO) main.train -> Training time took: 15:44:32.523114
+2020-07-14 19:10:27.589 (1573) (INFO) plots.PlotHistory -> Plotting history ...
+2020-07-14 19:10:27.987 (1573) (INFO) model_util.SaveModel -> Saving model and weights ...
+2020-07-14 19:10:28.40 (1573) (INFO) model_util.SaveResults -> Saving results ...
+2020-07-14 19:10:28.41 (1573) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.027366, RSE:0.308883, MAE:0.027366
+2020-07-14 19:11:01.83 (1573) (INFO) main.<module> -> Validation on the test set returned: Loss:0.027407, RSE:0.308992, MAE:0.027407

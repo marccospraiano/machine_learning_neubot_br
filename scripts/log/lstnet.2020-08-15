@@ -1,0 +1,8 @@
+2020-08-15 17:50:32.175 (3582) (INFO) main.train -> Training time took: 1 day, 14:34:02.564884
+2020-08-15 17:50:32.307 (3582) (INFO) model_util.SaveModel -> Saving model and weights ...
+2020-08-15 17:50:32.308 (3582) (WARNING) model_util.SaveModel -> File ../LSTM/lstm.json already exists. Backing it up to ../LSTM/lstm20200815.json
+2020-08-15 17:50:32.309 (3582) (WARNING) model_util.SaveModel -> File ../LSTM/lstm.h5 already exists. Backing it up to ../LSTM/lstm20200815.h5
+2020-08-15 17:50:32.333 (3582) (INFO) model_util.SaveResults -> Saving results ...
+2020-08-15 17:50:32.333 (3582) (WARNING) model_util.SaveResults -> File ../LSTM/lstm.txt already exists. Backing it up to ../LSTM/lstm20200815.txt
+2020-08-15 17:50:32.334 (3582) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.023377, RSE:0.306017, MAE:0.023377
+2020-08-15 17:51:14.210 (3582) (INFO) main.<module> -> Validation on the test set returned: Loss:0.023932, RSE:0.305335, MAE:0.023932

@@ -1,3 +1,6 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
+
 # This must be set in the beggining because in model_util, we import it
 logger_name = "lstnet"
 

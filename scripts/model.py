@@ -1,4 +1,5 @@
 import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
 import numpy as np
 import tensorflow as tf
 
@@ -308,15 +309,41 @@ def LSTNetModel(init, input_shape):
         # If configured not to apply CNN, copy the input
         C = X
     
-    # LSTM
-    # Apply two LSTM layer (with activation set to 'relu' as per the paper) and take the returned states as result
+    # Choice the Model
+    if init.choice_model == "gru":
+        _, R = GRU(init.GRUUnits, activation="selu", return_sequences = False, return_state = True)(C)
+        # R = GRU(init.GRUUnits, activation="selu", kernel_initializer=init.initialiser)(C)
+        R = Dropout(init.dropout)(R)
+        
+    if init.choice_model == "lstm":
+        R = LSTM(init.GRUUnits, activation="selu", return_sequences = False, return_state = False)(C)
+        R = Dropout(init.dropout)(R)  
+            
+    if init.choice_model == "bi_gru":
+        R = Bidirectional(GRU(init.GRUUnits, activation='selu', kernel_initializer=init.initialiser))(C)
+        R = Dropout(init.dropout)(R)
     
-    R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=True, 
+    if init.choice_model == "bi_lstm":
+        R = Bidirectional(LSTM(init.GRUUnits, activation='selu', kernel_initializer=init.initialiser))(C)
+        R = Dropout(init.dropout)(R)
+       
+    if init.choice_model == "lstnet_bid1":
+        R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=True, 
                            return_state=True, kernel_initializer=init.initialiser))(C)
-    R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=False, 
+        R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=False, 
                            return_state=False, kernel_initializer=init.initialiser))(R)
-    R = Dropout(init.dropout)(R)
-    
+        R = Dropout(init.dropout)(R)
+        
+    if init.choice_model == "lstnet_bid2":
+        R = Bidirectional(LSTM(init.GRUUnits, activation='selu', return_sequences=False, 
+                           return_state=False, kernel_initializer=init.initialiser))(C)
+        R = Dropout(init.dropout)(R)
+   
+    if init.choice_model == "gru_2H":
+        R = GRU(init.GRUUnits, activation="selu", kernel_initializer=init.initialiser, return_sequences = True)(C)
+        R = GRU(init.GRUUnits, activation="selu", kernel_initializer=init.initialiser, return_sequences = False)(R)
+        # R = GRU(init.GRUUnits, activation="selu", kernel_initializer=init.initialiser)(C)
+        R = Dropout(init.dropout)(R)
 
     # SkipGRU
     if init.skip > 0:
@@ -324,7 +351,7 @@ def LSTNetModel(init, input_shape):
         pt   = int(init.window / init.skip)
 
         S    = PreSkipTrans(pt, int((init.window - init.CNNKernel + 1) / pt))(C)
-        _, S = Bidirectional(LSTM(init.SkipGRUUnits, activation='selu',
+        _, S = Bidirectional(GRU(init.SkipGRUUnits, activation='selu',
                    return_sequences=False, return_state=True))(S)
         S    = PostSkipTrans(int((init.window - init.CNNKernel + 1) / pt))([S,X])
 
@@ -333,6 +360,7 @@ def LSTNetModel(init, input_shape):
     
     # Dense layer
     Y = Flatten()(R)
+    # Y = Activation('relu')(Y)
     Y = Dense(m)(Y)
     
     # AR

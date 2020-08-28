@@ -1,0 +1,27 @@
+2020-08-05 08:05:08.8 (4048) (INFO) main.train -> Training time took: 1 day, 19:24:43.403554
+2020-08-05 08:05:08.142 (4048) (INFO) model_util.SaveModel -> Saving model and weights ...
+2020-08-05 08:05:08.165 (4048) (INFO) model_util.SaveResults -> Saving results ...
+2020-08-05 08:05:08.166 (4048) (INFO) main.<module> -> Validation on the validation set returned: Loss:0.023103, RSE:0.305846, MAE:0.023103
+2020-08-05 08:05:55.123 (4048) (INFO) main.<module> -> Validation on the test set returned: Loss:0.023660, RSE:0.305520, MAE:0.023660
+2020-08-05 11:32:53.760 (15490) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-08-05 11:32:53.760 (15490) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-08-05 11:32:53.760 (15490) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-08-05 11:33:44.708 (15514) (INFO) main.<module> -> Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+2020-08-05 11:33:44.708 (15514) (INFO) main.<module> -> Tensorflow version: 1.14.0
+2020-08-05 11:33:44.708 (15514) (INFO) main.<module> -> Keras version: 2.2.4-tf ... Using tensorflow embedded keras
+2020-08-05 11:34:50.117 (15490) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-08-05 11:35:12.357 (15490) (INFO) main.<module> -> Training shape: X:(9796103, 11, 14) Y:(9796103, 14)
+2020-08-05 11:35:12.357 (15490) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 14) Y:(1224515, 14)
+2020-08-05 11:35:12.357 (15490) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 14) Y:(1224516, 14)
+2020-08-05 11:35:12.357 (15490) (INFO) main.<module> -> Creating model
+2020-08-05 11:35:12.686 (15490) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-08-05 11:35:12.687 (15490) (INFO) main.<module> -> Training model ... 
+2020-08-05 11:35:50.215 (15514) (INFO) model_util.split_data -> Splitting data into training set (0.80), validation set (0.10) and testing set (0.10)
+2020-08-05 11:36:19.687 (15514) (INFO) main.<module> -> Training shape: X:(9796103, 11, 14) Y:(9796103, 14)
+2020-08-05 11:36:19.687 (15514) (INFO) main.<module> -> Validation shape: X:(1224515, 11, 14) Y:(1224515, 14)
+2020-08-05 11:36:19.687 (15514) (INFO) main.<module> -> Testing shape: X:(1224516, 11, 14) Y:(1224516, 14)
+2020-08-05 11:36:19.687 (15514) (INFO) main.<module> -> Creating model
+2020-08-05 11:36:20.68 (15514) (INFO) main.<module> -> Model compiled ... No tensorboard visualisation is available
+2020-08-05 11:36:20.68 (15514) (INFO) main.<module> -> Training model ... 

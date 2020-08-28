@@ -1,0 +1,42 @@
+System Info:
+	Python version: 3.5.2 (default, Oct  8 2019, 13:06:37) 
+[GCC 5.4.0 20160609]
+	TensorFlow version: 1.14.0
+	Keras version: 2.2.4-tf
+
+Training Info:
+	Loss Function: mean_absolute_error
+	Optimisation Method: SGD
+	Learning Rate: 0.05
+	Batch Size: 64
+	Number of Epochs: 130
+
+Training Results:
+	Loss: 0.029172621329444814
+	Rse: 0.30949408
+	Mean_Absolute_Error: 0.029172512
+
+Validation Results:
+	Loss: 0.02337734097239386
+	Rse: 0.30601725
+	Mean_Absolute_Error: 0.02337729
+
+Model Summary:
+	Model: "model"
+	_________________________________________________________________
+	Layer (type)                 Output Shape              Param #   
+	=================================================================
+	input_1 (InputLayer)         [(None, 11, 14)]          0         
+	_________________________________________________________________
+	lstm (LSTM)                  (None, 64)                20224     
+	_________________________________________________________________
+	dropout (Dropout)            (None, 64)                0         
+	_________________________________________________________________
+	flatten (Flatten)            (None, 64)                0         
+	_________________________________________________________________
+	dense (Dense)                (None, 14)                910       
+	=================================================================
+	Total params: 21,134
+	Trainable params: 21,134
+	Non-trainable params: 0
+	_________________________________________________________________

@@ -1,3 +1,6 @@
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
+
 import argparse
 import numpy as np
 
@@ -220,6 +223,7 @@ class LSTNetInit(object):
             self.log             = not args["no_log"]
             self.debuglevel      =     args["debuglevel"]
             self.logfilename     =     args["logfilename"]
+            self.choice_model    =     args["choice_model"]
         else:
             self.data            =     args.data
             self.window          =     args.window
@@ -257,6 +261,7 @@ class LSTNetInit(object):
             self.log             = not args.no_log
             self.debuglevel      =     args.debuglevel
             self.logfilename     =     args.logfilename
+            self.choice_model    =     args.choice_model
 
 
     def dump(self):
@@ -298,6 +303,7 @@ class LSTNetInit(object):
         log.debug("Create log: %s", self.log)
         log.debug("Debug level: %d", self.debuglevel)
         log.debug("Logfile: %s", self.logfilename)
+        log.debug("Model: %s", self.choice_model)
 
 
 def get_arguments():
@@ -348,6 +354,7 @@ def get_arguments():
         parser.add_argument('--no-log', action='store_true', help='Do not create log files. Only error and critical messages will appear on the console.')
         parser.add_argument('--debuglevel', type=int, choices=[10, 20, 30, 40, 50], default=20, help='Logging debug level. Default 20 (INFO)')
         parser.add_argument('--logfilename', type=str, default="log/lstnet", help="Filename where logging will be written. Default: log/lstnet")
+        parser.add_argument('--choice_model', type=str, default='gru', help='the model')
 
         args = parser.parse_args()
         return args

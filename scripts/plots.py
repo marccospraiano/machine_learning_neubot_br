@@ -8,6 +8,9 @@ from __main__ import logger_name
 import logging
 log = logging.getLogger(logger_name)
 
+import os
+os.environ['CUDA_VISIBLE_DEVICES'] = '1' # SET A SINGLE GPU
+
 
 def AutoCorrelationPlot(Data, init):
     if Data is not None and init is not None:
@@ -68,7 +71,49 @@ def AutoCorrelationPlot(Data, init):
             fig.savefig(init.save_plot + "_autocorrelation.png")
 
 
-def PlotHistory(history, metrics, init):
+def PlotHistory(hist, metrics, init):
+    
+    if hist is not None and init is not None:
+        #-----------------------------------------------------------
+        # Retrieve a list of list results on training and validation data
+        # sets for each training epoch
+        #-----------------------------------------------------------
+        # loss=history.history['loss']
+        # val_loss=history.history['val_loss']
+        # epochs=range(len(loss)) # Get number of epochs
+
+        if 'loss' in metrics:
+            plt.figure(figsize=(10,6))
+            plt.plot(hist['loss'], label='Training loss')
+            plt.plot(hist['val_loss'], label='Validation loss')
+            plt.xlabel("epochs")
+            plt.ylabel("loss")
+            plt.legend(loc='best')    
+            plt.grid(True)
+            # plt.savefig(init.save_plot + "_training.png")
+            if init.save_plot is not None:
+                log.debug("Saving training history plot to: %s", init.save_plot + "_training.png")
+                # print("Saving training history plot to: %s" % (init.save_plot + "_training.png"))
+                plt.savefig(init.save_plot + "_training.png")
+                plt.show();
+
+        if 'rse' in metrics:
+            plt.figure(figsize=(10,6))
+            plt.plot(hist['rse'], label='Training RSE')
+            plt.plot(hist['val_rse'], label='Validation RSE')
+            plt.xlabel("epochs")
+            plt.ylabel("rse")
+            plt.legend(loc='best')    
+            plt.grid(True)
+            # plt.savefig(init.save_plot + "_training.png")
+            if init.save_plot is not None:
+                log.debug("Saving training history plot to: %s", init.save_plot + "_training_rse.png")
+                # print("Saving training history plot to: %s" % (init.save_plot + "_training.png"))
+                plt.savefig(init.save_plot + "_training_rse.png")
+                plt.show();
+     
+    
+    """
     if history is not None and metrics is not None and init is not None:
         log.info("Plotting history ...")
 
@@ -133,6 +178,7 @@ def PlotHistory(history, metrics, init):
         if init.save_plot is not None:
             log.debug("Saving training history plot to: %s", init.save_plot + "_training.png")
             fig.savefig(init.save_plot + "_training.png")
+            """
 
 def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
     if Data is not None and init is not None:
@@ -202,19 +248,19 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
         end   = start + len(Data.train[0]) # Same length as trainPredict however we might not have trainPredict
         if trainPredict is not None:
             log.debug("Filling trainPredictPlot from %d to %d", start, end)
-            trainPredictPlot[start:end, :] = trainPredict
+            trainPredictPlot[start:end, :] = trainPredict*10
 
         start = end
         end   = start + len(Data.valid[0]) # Same length as validPredict however we might not have validPredict
         if validPredict is not None:
             log.debug("Filling validPredictPlot from %d to %d", start, end)
-            validPredictPlot[start:end, :] = validPredict
+            validPredictPlot[start:end, :] = validPredict*10
 
         start = end
         end   = start + len(Data.test[0]) # Same length as testPredict however we might not have testPredict
         if testPredict is not None:
             log.debug("Filling testPredictPlot from %d to %d", start, end)
-            testPredictPlot[start:end, :] = testPredict
+            testPredictPlot[start:end, :] = testPredict*10
 
         """
         # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
@@ -224,10 +270,10 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
         if trainPredict is not None and init.predict == 'trainingdata':
             # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
             fig = plt.figure()
-            plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+            plt.plot(Data.data[start_plot:end_plot, series]*10, color='blue', label='data')
             plt.plot(trainPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='prediction')
-            plt.ylabel("Throughput(Mbit/s)")
-            plt.xlabel("Seconds")
+            plt.ylabel("Throughput(kbps)")
+            plt.xlabel("Samples")
             # plt.title("Prediction Plotting for timeseries # %d" % (series))
             plt.legend(loc='best')
             plt.grid(True)
@@ -241,10 +287,10 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
         if validPredict is not None and init.predict == 'validationdata':
             # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
             fig = plt.figure()
-            plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+            plt.plot(Data.data[start_plot:end_plot, series]*10, color='blue', label='data')
             plt.plot(validPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='prediction')
-            plt.ylabel("Throughput(Mbit/s)")
-            plt.xlabel("Seconds")
+            plt.ylabel("Throughput(kbps)")
+            plt.xlabel("Samples")
             # plt.title("Prediction Plotting for timeseries # %d" % (series))
             plt.legend(loc='best')
             plt.grid(True)
@@ -258,10 +304,10 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
         if testPredict is not None and init.predict == 'testingdata':
             # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
             fig = plt.figure()
-            plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+            plt.plot(Data.data[start_plot:end_plot, series]*10, color='blue', label='data')
             plt.plot(testPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='prediction')
-            plt.ylabel("Throughput(Mbit/s)")
-            plt.xlabel("Seconds")
+            plt.ylabel("Throughput(kbps)")
+            plt.xlabel("Samples")
             # plt.title("Prediction Plotting for timeseries # %d" % (series))
             plt.legend(loc='best')
             plt.grid(True)
@@ -275,12 +321,12 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
             if init.predict == 'all':
                 # Plotting the original series and whatever is available of trainPredictPlot, validPredictPlot and testPredictPlot
                 fig = plt.figure()
-                plt.plot(Data.data[start_plot:end_plot, series], color='blue', label='data')
+                plt.plot(Data.data[start_plot:end_plot, series]*10, color='blue', label='data')
                 plt.plot(trainPredictPlot[start_plot:end_plot, series], 'k--', color='orange', label='training')
                 plt.plot(validPredictPlot[start_plot:end_plot, series], 'k--', color='green', label='validation')
                 plt.plot(testPredictPlot[start_plot:end_plot, series], 'k--', color='red', label='testing')
-                plt.ylabel("Throughput(Mbit/s)")
-                plt.xlabel("Seconds")
+                plt.ylabel("Throughput(kbps)")
+                plt.xlabel("Samples")
                 # plt.title("Prediction Plotting for timeseries # %d" % (series))
                 plt.legend(loc='best')
                 plt.grid(True)
@@ -293,7 +339,6 @@ def PlotPrediction(Data, init, trainPredict, validPredict, testPredict):
         """
         fig.canvas.set_window_title('Prediction')
         plt.show()
-
         if init.save_plot is not None:
             log.debug("Saving prediction plot to: %s", init.save_plot + "_prediction.png")
             fig.savefig(init.save_plot + "_prediction.png")
