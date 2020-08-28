@@ -1,2 +1,2 @@
 # machine_learning_neubot_br
-Machine Leaning for prediction of traffic traces
+Deep Learning for prediction of the throughput on ABR
